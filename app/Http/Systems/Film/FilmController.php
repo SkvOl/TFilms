@@ -9,12 +9,12 @@ use App\Models\Films;
 class FilmController extends Controller{
     
     function getList($request = []){
-        return Films::all();
+        return FilmResource::collection(Films::all());
     }
 
     function getOne(string $id){
         $films = new Films;
-        return [$films->find($id)];
+        return FilmResource::collection([$films->find($id)]);
     }
 
     function save($request){
