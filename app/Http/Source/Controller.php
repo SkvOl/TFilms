@@ -12,6 +12,7 @@ abstract class Controller{
 
     private $validation;
     private $system;
+    private $targetController;
 
     public $url;
 
@@ -25,11 +26,9 @@ abstract class Controller{
         $classArray = get_declared_classes();
         $this->validation = $classArray[array_search('App\\Http\\Source\\Controller', $classArray) - 1];
         
-        $targetController = explode('\\', $this->validation);
-        $targetController = end($targetController);
-        $this->system = str_replace('Controller', '', $targetController);
-        
-        $this->validation = $this->exist(str_replace($targetController, 'Request\\'.$this->system.'Request', $this->validation));
+        $this->targetController = explode('\\', $this->validation);
+        $this->targetController = end($this->targetController);
+        $this->system = str_replace('Controller', '', $this->targetController);
     }
 
 
@@ -40,7 +39,7 @@ abstract class Controller{
             $statusCode = 200;
             return $this->getList($request);
         });
-        // $response = $this->getList($request); 
+
         return self::_response($response, $statusCode);
     }
     
@@ -53,10 +52,14 @@ abstract class Controller{
 
     function store(Request $request){
         $method = self::choice($request);
+        $this->validation = $this->exist(str_replace($this->targetController, 'Request\\'.$this->system.$method['request'].'Request', $this->validation));
+        $request->request->remove('method');
+
         if($this->validation !== false) app($this->validation);
         
         $response = '';
         DB::transaction(function() use ($request, $method, &$response) {
+            $method = $method['method'];
             $response = $this->$method($request);
 
             if(Cache::has($this->system)) Cache::forget($this->system);
@@ -77,13 +80,13 @@ abstract class Controller{
         }
     }
 
-    private static function choice(Request $request):string {
+    
+    private static function choice(Request $request):mixed {
         switch($request->input('method')){
-            case 'post': return 'save';
-            case 'patch': return 'change';
-            case 'delete': return 'delete';
-            default: return 'save';
+            case 'post': return ['method'=>'save', 'request'=>'Save'];
+            case 'patch': return ['method'=>'change', 'request'=>'Change'];
+            case 'delete': return ['method'=>'delete', 'request'=>'Delete'];
+            default: return ['method'=>'save', 'request'=>'Save'];
         }
     }
-
 }
