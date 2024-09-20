@@ -33,12 +33,11 @@ abstract class Controller{
 
     function index(Request $request){ 
         $statusCode = 200;
-
         $response = Cache::rememberForever($this->system, function () use (&$statusCode, $request) {
             $statusCode = 200;
             return $this->getList($request);
         });
-        
+        // $response = $this->getList($request); 
         return self::_response($response, $statusCode);
     }
     

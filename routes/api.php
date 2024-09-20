@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Systems\Film\FilmController;
 
-Route::get('/', function () {
-    return 'api';
-});
+Route::apiResource('film', FilmController::class);
