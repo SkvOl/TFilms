@@ -3,20 +3,43 @@ namespace App\Http\Systems\Film;
 
 use App\Http\Systems\Film\Resource\FilmResource;
 use App\Http\Source\Controller;
-
+use App\Models\Films;
 
 
 class FilmController extends Controller{
     
     function getList($request = []){
-        return 'getList56465';
+        return Films::all();
     }
 
     function getOne(string $id){
-        return 'getOne56465';
+        $films = new Films;
+        return [$films->find($id)];
     }
 
-    function post($request){
+    function save($request){
+        $id = Films::insertGetId($request->all());
         
+        return [
+            'id'=>$id,
+        ];
+    }
+
+    function change($request){
+        $id = $request->input('id');
+        Films::where('id', $id)->update($request->all());
+        
+        return [
+            'id'=>$id,
+        ];
+    }
+
+    function delete($request){
+        $id = $request->input('id');
+        Films::find($id)->delete();
+        
+        return [
+            'id'=>$id,
+        ];
     }
 }

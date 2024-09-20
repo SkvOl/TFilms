@@ -17,7 +17,9 @@ abstract class Controller{
 
     abstract function getList($request);
     abstract function getOne(string $id);
-    abstract function post($request);
+    abstract function save($request);
+    abstract function change($request);
+    abstract function delete($request);
 
     function __construct(){
         $classArray = get_declared_classes();
@@ -29,6 +31,7 @@ abstract class Controller{
         
         $this->validation = $this->exist(str_replace($targetController, 'Request\\'.$this->system.'Request', $this->validation));
     }
+
 
 
     function index(Request $request){ 
@@ -49,17 +52,20 @@ abstract class Controller{
     }
 
     function store(Request $request){
+        $method = self::choice($request);
         if($this->validation !== false) app($this->validation);
         
         $response = '';
-        DB::transaction(function() use ($request, &$response) {
-            $response = $this->post($request);
+        DB::transaction(function() use ($request, $method, &$response) {
+            $response = $this->$method($request);
 
             if(Cache::has($this->system)) Cache::forget($this->system);
         });
 
         return self::_response($response, 200);
     }
+
+
 
     private function exist($className){
         try{
@@ -70,4 +76,14 @@ abstract class Controller{
             return false;
         }
     }
+
+    private static function choice(Request $request):string {
+        switch($request->input('method')){
+            case 'post': return 'save';
+            case 'patch': return 'change';
+            case 'delete': return 'delete';
+            default: return 'save';
+        }
+    }
+
 }
