@@ -4,7 +4,7 @@ namespace App\Http\Systems\Film;
 use App\Http\Systems\Film\Resource\FilmResource;
 use App\Http\Source\Controller;
 use App\Models\Films;
-
+use Illuminate\Support\Str;
 
 class FilmController extends Controller{
     
@@ -18,7 +18,11 @@ class FilmController extends Controller{
     }
 
     function save($request){
-        $id = Films::insertGetId($request->all());
+        $file = $request->file('photo');
+        $file_name = Str::random(10).'.'.$file->getClientOriginalExtension();
+        $file->storeAs('files', $file_name);
+
+        $id = Films::insertGetId(['photo'=>$file_name] + $request->all());
         
         return [
             'id'=>$id,
@@ -27,7 +31,16 @@ class FilmController extends Controller{
 
     function change($request){
         $id = $request->input('id');
-        Films::where('id', $id)->update($request->all());
+        
+        if($request->file('photo') !== null){
+            $file = $request->file('photo');
+            $file_name = Str::random(10).'.'.$file->getClientOriginalExtension();
+            $file->storeAs('files', $file_name);
+            
+            Films::where('id', $id)->update(['photo'=>$file_name] + $request->all());
+        }
+        else Films::where('id', $id)->update($request->all());
+        
         
         return [
             'id'=>$id,

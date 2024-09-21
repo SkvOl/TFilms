@@ -9,7 +9,7 @@ class FilmSaveRequest extends Request{
     {
         return [
             'name' => 'required|string|min:3|max:255|unique:App\Models\Films,name',
-            'photo' => 'required|string|min:1|max:255',
+            'photo' => 'required|file|mimes:jpeg,png|max:4096',
             'description'=>'required|string|min:5|max:255',
             'duration'=>'required|string',
             'age_restrictions'=>'required|int',
