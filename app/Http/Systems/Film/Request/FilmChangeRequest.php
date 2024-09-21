@@ -11,7 +11,7 @@ class FilmChangeRequest extends Request{
         return [
             'id' => 'required|int',
             'name' => 'string|min:3|max:255',
-            'photo' => 'string|min:1|max:255',
+            'photo' => 'file|mimes:jpeg,png|max:4096',
             'description'=>'string|min:5|max:255',
             'duration'=>'string',
             'age_restrictions'=>'int',
