@@ -8,8 +8,9 @@ use App\Models\FilmsSessions;
 
 class SessionController extends Controller{
     
-    function getList($request = []){
-        return SessionResource::collection(FilmsSessions::all());
+    function getList($request){
+        if($request->input('order') !== null) return SessionResource::collection(FilmsSessions::select()->orderBy('film_start', $request->input('order'))->get());
+        else return SessionResource::collection(FilmsSessions::all());
     }
 
     function getOne(string $id){

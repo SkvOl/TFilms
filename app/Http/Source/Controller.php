@@ -34,12 +34,12 @@ abstract class Controller{
 
 
     function index(Request $request){ 
-        $statusCode = 200;
-        $response = Cache::rememberForever($this->system, function () use (&$statusCode, $request) {
+        $statusCode = 201;
+        $response = Cache::rememberForever($this->system. json_encode($request->all(), JSON_UNESCAPED_UNICODE), function () use (&$statusCode, $request) {
             $statusCode = 200;
             return $this->getList($request);
         });
-
+    
         return self::_response($response, $statusCode);
     }
     
@@ -62,7 +62,7 @@ abstract class Controller{
             $method = $method['method'];
             $response = $this->$method($request);
 
-            if(Cache::has($this->system)) Cache::forget($this->system);
+            if(Cache::has($this->system)) DB::table('cache')->where('key', 'like', $this->system.'%')->delete();
         });
 
         return self::_response($response, 200);
