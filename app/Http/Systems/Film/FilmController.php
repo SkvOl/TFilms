@@ -5,14 +5,17 @@ use App\Http\Systems\Film\Resource\FilmResource;
 use App\Http\Source\Controller;
 use App\Models\Films;
 use Illuminate\Support\Str;
-
+use Illuminate\Http\Request;
 class FilmController extends Controller{
     
-    function getList($request = []){
-        return FilmResource::collection(Films::all());
+    function getList($request){
+        if($request->input('order') !== null) return FilmResource::collection(Films::select()->orderBy('id', $request->input('order'))->get());
+        else return FilmResource::collection(Films::all());
     }
 
     function getOne(string $id){
+        file_put_contents('para_getOne.txt', var_export($id, true));
+
         $films = new Films;
         return FilmResource::collection([$films->find($id)]);
     }
