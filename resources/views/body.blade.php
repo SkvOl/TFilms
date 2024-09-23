@@ -21,7 +21,7 @@
                         @foreach ($sessions as $key=>$session)
                             @if ($session['film_id'] == $film['film_id'])
                                 <div class="bg-c-card-session card w-25 text-center mb-3 me-3">
-                                    <a class="session-c-link" href="#">
+                                    <a id="{{$session['session_id']}}" class="session-c-link" href="#">
                                         <div><h4>{{$session['cost']}} рублей</h4></div>
                                         <div>{{substr($session['film_start'], 0, -3)}}</div>
                                     </a>
@@ -30,7 +30,58 @@
                         @endforeach
                     </div>
                 </div>
+                @if($isAuthorized)
+                    <div class="d-flex flex-row-reverse bd-highlight me-2 mt-2 mb-2 p-1">
+                        <a type="submit" href="/delete_film?id={{$film['film_id']}}" class="btn btn-warning">Удалить фильм</a>
+                        <button type="submit" class="btn btn-warning me-1">Удалить сеанс</button>
+                        <button id="{{$film['film_id']}}"  type="submit" class="btn btn-warning me-1 exist-film-id" data-bs-toggle="modal" data-bs-target="#saveSessionFilmModal">Добавить сеанс</button>
+                    </div>
+                @endif
             </div>
         @endforeach
     </div>
 </div>
+
+@include('addFilmModal')
+@include('addSessionFilmModal')
+
+<script>
+    window.onload = function() {
+        film_id = 0;
+        
+        $(".exist-film-id").click(function(){
+            film_id = $(this).attr('id');
+        });
+
+
+        $(".session-c-link").click(function(){
+            session_id = $(this).attr('id');
+            ajax('/delete_session', {id: session_id})
+            window.location.href = window.location.href;
+        });
+
+        $(".save-session").click(function(){
+            dataForm = $("#saveSessionFilmFrame").serializeArray();
+            
+            console.log(film_id);
+            ajax('/create_session', {
+                'film_id': film_id,
+                'film_start':dataForm[0]['value'],
+                'cost':dataForm[1]['value']
+            })
+        });
+
+        function ajax(url, item){
+            $.ajax({
+                url: url,
+                method: 'post',
+                dataType: 'json',
+                data: item,
+                success: function(data){
+                    console.log('s');
+                }
+            });
+            window.location.href = window.location.href;
+        }
+    }; 
+</script>
