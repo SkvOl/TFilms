@@ -34,11 +34,11 @@ class FilmController extends Controller{
 
     function change($request){
         $id = $request->input('id');
-        
-        if($request->file('photo') !== null){
-            $file = $request->file('photo');
+        $file = $request->file('photo');
+
+        if($file !== null){
             $file_name = Str::random(10).'.'.$file->getClientOriginalExtension();
-            $file->storeAs('files', $file_name);
+            $file->storeAs('files', $file_name, 'public');
             
             Films::where('id', $id)->update(['photo'=>$file_name] + $request->all());
         }

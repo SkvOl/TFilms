@@ -13,12 +13,31 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        
         <style>
             .bg-c-card{
                 background-color: #131313;
                 color: #C8C8C8;
                 font-family: 'Nunito'!important;
+            }
+
+            .bg-c-card-modal{
+                background-color: #1C1C1C;
+                color: #C8C8C8;
+                font-family: 'Ariel'!important;
+            }
+
+            .modal-header {
+                min-height: 16.42857143px;
+                padding: 15px;
+                border-bottom: 1px solid #ffc107;
+            }
+
+            .modal-footer {
+                padding: 15px;
+                text-align: right;
+                border-top: 1px solid #ffc107;
             }
 
             .bg-c-card-session{

@@ -23,8 +23,7 @@ abstract class Controller{
     abstract function delete($request);
 
     function __construct(){
-        $classArray = get_declared_classes();
-        $this->validation = $classArray[array_search('App\\Http\\Source\\Controller', $classArray) - 1];
+        $this->validation = get_class($this);
         
         $this->targetController = explode('\\', $this->validation);
         $this->targetController = end($this->targetController);
@@ -34,8 +33,9 @@ abstract class Controller{
 
 
     function index(Request $request){ 
-        $statusCode = 201;
-        $response = Cache::rememberForever($this->system. json_encode($request->all(), JSON_UNESCAPED_UNICODE), function () use (&$statusCode, $request) {
+        $statusCode = 201; 
+
+        $response = Cache::rememberForever($this->system. md5(json_encode($request->all(), JSON_UNESCAPED_UNICODE)), function () use (&$statusCode, $request) {
             $statusCode = 200;
             return $this->getList($request);
         });
@@ -62,7 +62,8 @@ abstract class Controller{
             $method = $method['method'];
             $response = $this->$method($request);
 
-            if(Cache::has($this->system)) DB::table('cache')->where('key', 'like', $this->system.'%')->delete();
+
+            $this->cacheDelete($this->system.'%');
         });
 
         return self::_response($response, 200);
@@ -88,5 +89,11 @@ abstract class Controller{
             case 'delete': return ['method'=>'delete', 'request'=>'Delete'];
             default: return ['method'=>'save', 'request'=>'Save'];
         }
+    }
+
+    private function cacheDelete($key){
+        $response = DB::table('cache')->where('key', 'like', $key);
+        // file_put_contents('delete.txt', str_replace('?', '"'.$this->system.'%"', $response->toSql()));
+        $response->delete();
     }
 }

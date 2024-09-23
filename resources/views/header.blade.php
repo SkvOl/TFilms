@@ -7,6 +7,9 @@
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="#" class="nav-c-link px-2">Список фильмов</a></li>
         <li><a href="#" class="nav-c-link px-2">Профиль</a></li>
+        @if($isAuthorized)
+            <li><a href="#" class="nav-c-link px-2" data-bs-toggle="modal" data-bs-target="#saveFilmModal">Добавить фильм</a></li>
+        @endif
     </ul>
 
     <div class="col-md-3 text-end">
