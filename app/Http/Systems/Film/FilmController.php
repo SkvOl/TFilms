@@ -5,7 +5,8 @@ use App\Http\Systems\Film\Resource\FilmResource;
 use App\Http\Source\Controller;
 use App\Models\Films;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
+
+
 class FilmController extends Controller{
     
     function getList($request){
@@ -38,7 +39,7 @@ class FilmController extends Controller{
 
         if($file !== null){
             $file_name = Str::random(10).'.'.$file->getClientOriginalExtension();
-            $file->storeAs('files', $file_name, 'public');
+            $file->storeAs('files', $file_name);
             
             Films::where('id', $id)->update(['photo'=>$file_name] + $request->all());
         }

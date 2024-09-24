@@ -16,6 +16,33 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         
         <style>
+            .form-control {
+                display: block;
+                width: 100%;
+                padding: .375rem .75rem;
+                font-size: 1rem;
+                font-weight: 400;
+                line-height: 1.5;
+                color: #C8C8C8;
+                background-color: #1C1C1C;
+                background-clip: padding-box;
+                border: 1px solid #ced4da;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                border-radius: .375rem;
+                transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+            }
+
+            .form-control:focus {
+                color: #C8C8C8;
+                background-color: #1C1C1C;
+                border-color: #ffc107;
+                outline: 0;
+                box-shadow: none;
+            }
+
+
             .bg-c-card{
                 background-color: #131313;
                 color: #C8C8C8;

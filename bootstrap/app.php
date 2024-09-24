@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\AuthMiddleware;
+use Illuminate\Foundation\Application;
 use App\Http\Source\Wrapper;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -14,6 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->encryptCookies(except: [
+            'token',
+        ]);
+        
+        $middleware->web(append: [
+            AuthMiddleware::class,
+        ]);
+        
+        
         $middleware->web(remove: [
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,

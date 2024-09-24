@@ -11,7 +11,7 @@ trait Wrapper{
         $status = (in_array($statusCode, [200, 201, 304]) ? 'Successfully': 'Error');
 
         return response([
-            'status'=> $status.'_'.$statusCode,
+            'status'=> $status,
             'data'=> $response,
 
         ])->setStatusCode($statusCode);

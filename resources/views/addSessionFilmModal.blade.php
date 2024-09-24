@@ -9,15 +9,15 @@
                 <form action="/api/film" id="saveSessionFilmFrame" method="post" enctype="multipart/form-data" target="saveSessionFilmFrame">
                     <div class="mb-3">
                         <label for="film_start" class="form-label">Дата</label>
-                        <input type="datetime-local" name="film_start" class="form-control" id="film_start">
+                        <input type="datetime-local" name="film_start" class="form-control film_start" id="film_start">
                     </div>
                     <div class="mb-3">
                         <label for="cost" class="form-label">Стоимость</label>
-                        <input type="cost" name="cost" class="form-control" id="cost">
+                        <input type="cost" name="cost" class="form-control cost" id="cost">
                     </div>
 
                     <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" class="btn btn-warning save-session" data-bs-dismiss="modal">Сохранить</button>
+                    <button type="button" id="post" class="btn btn-warning save-session" data-bs-dismiss="modal">Сохранить</button>
                 </form>
             </div> 
         </div>
