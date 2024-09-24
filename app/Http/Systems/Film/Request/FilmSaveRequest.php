@@ -12,7 +12,7 @@ class FilmSaveRequest extends Request{
             'photo' => 'required|file|mimes:jpeg,png|max:4096',
             'description'=>'required|string|min:5|max:255',
             'duration'=>'required|string',
-            'age_restrictions'=>'required|int',
+            'age_restrictions'=>'required|int|string',
         ];
     }
 }

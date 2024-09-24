@@ -14,7 +14,7 @@ class FilmChangeRequest extends Request{
             'photo' => 'file|mimes:jpeg,png|max:4096',
             'description'=>'string|min:5|max:255',
             'duration'=>'string',
-            'age_restrictions'=>'int',
+            'age_restrictions'=>'int|string',
         ];
     }
 }

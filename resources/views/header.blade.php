@@ -13,7 +13,12 @@
     </ul>
 
     <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-warning me-2">Войти</button>
-        <button type="button" class="btn btn-warning me-3">Зарегистрироваться</button>
+        @if(!$isAuthorized)
+            <button type="button" class="btn btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#inModal">Войти</button>
+            <button type="button" class="btn btn-warning me-3" data-bs-toggle="modal" data-bs-target="#authModal">Зарегистрироваться</button>
+        @else
+            <button type="button" class="btn btn-outline-warning me-2 out-auth">Выйти</button>
+        @endif
     </div>
 </header>
+
