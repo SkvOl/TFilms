@@ -17,6 +17,14 @@ class Exceptions extends Exception{
         $this->status = $status;
     }
 
+
+    #[OAT\Schema(
+        schema: 'Error',
+        properties: [
+            new OAT\Property(property: 'line', type: 'int', example: 37),
+            new OAT\Property(property: 'file', type: 'string', format: 'string', example: '/path_to_file/...'),
+        ]
+    )]
     function render($request){
         return self::_response([
             'Message'=>$this->getMessage(),

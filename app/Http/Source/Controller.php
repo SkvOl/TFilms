@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Source\Wrapper;
 
+
+ /**
+ * @OA\Info(
+ *     version="1.0",
+ *     title="API TFilms"
+ * )
+ */
 abstract class Controller{
     use Wrapper;
 

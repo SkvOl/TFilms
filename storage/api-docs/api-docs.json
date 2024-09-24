@@ -1,0 +1,1405 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API TFilms",
+        "version": "1.0"
+    },
+    "paths": {
+        "/auth/in": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Аутентификация",
+                "description": "Аутентификация пользователя",
+                "operationId": "7ab88967d7dc7399c065d81304ad0b5f",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/InRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TokenResponse"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Пользователь не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "User not found"
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Не верный пароль",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "Invalid password"
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/check": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Проверка токена",
+                "description": "Проверка токена",
+                "operationId": "101e9a848a5f5497f8a7b32e5bf4920d",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/CheckRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Токен неверный или отсутствует",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "Invalid token"
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Время access токена истекло",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "The token is timeout"
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/out": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Выход из аккаунта",
+                "description": "Выход из аккаунта",
+                "operationId": "3d07e28d0cac9cdce6f3b7fe22dc2aee",
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/auth": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Регистрация пользователя",
+                "description": "Регистрация пользователя",
+                "operationId": "232e366b3ae532d26142734bea95fcef",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/AuthRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/TokenResponse"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Не верный запрос",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "Bad Request"
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/film": {
+            "get": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Получение списка фильмов",
+                "description": "Получение списка фильмов",
+                "operationId": "aeb112c4a8c96e5905cbad92a69405b4",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/FilmGetRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/FilmResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Создание фильма",
+                "description": "Создание фильма",
+                "operationId": "9ed355b538d75c8acd3b880c5d99540a",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/FilmSaveRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "format": "int",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Удаление фильма. На самом деле это постзапрос с параметром в теле запроса method=delete",
+                "description": "Удаление фильма. На самом деле это постзапрос с параметром в теле запроса method=delete",
+                "operationId": "027ec193f0a77c6f94d91d800d9bfa40",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/FilmDeleteRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "format": "int",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Изменение фильма. На самом деле это постзапрос с параметром в теле запроса method=patch",
+                "description": "Изменение фильма. На самом деле это постзапрос с параметром в теле запроса method=patch",
+                "operationId": "2483e9d02f7af3312de5a12dec5ecefc",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/FilmChangeRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "format": "int",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/film/{film_id}": {
+            "get": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Получение одного фильма",
+                "description": "Получение одного фильма",
+                "operationId": "7b31b18db3ab6a34e1b336aebc73f5d0",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/FilmGetRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/FilmResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/film_session": {
+            "get": {
+                "tags": [
+                    "film_session"
+                ],
+                "summary": "Получение списка сеансов фильма",
+                "description": "Получение списка сеансов фильма",
+                "operationId": "28e8917ff6183320a209dc574a34ea00",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/FilmGetRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/SessionResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "film_session"
+                ],
+                "summary": "Создание сеанса",
+                "description": "Создание сеанса",
+                "operationId": "5af62fc6775b40278f8d6850c4a250a9",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/SessionSaveRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "format": "int",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "film_session"
+                ],
+                "summary": "Удаление сеанса. На самом деле это постзапрос с параметром в теле запроса method=delete",
+                "description": "Удаление сеанса. На самом деле это постзапрос с параметром в теле запроса method=delete",
+                "operationId": "4ee92f030482933cabef8cb3ffcc4f63",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/SessionDeleteRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "format": "int",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "film_session"
+                ],
+                "summary": "Изменение сеанса. На самом деле это постзапрос с параметром в теле запроса method=patch",
+                "description": "Изменение сеанса. На самом деле это постзапрос с параметром в теле запроса method=patch",
+                "operationId": "695e7fb8ba0b32a90ef727fb900e7305",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/SessionChangeRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "format": "int",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/film_session/{session_id}": {
+            "get": {
+                "tags": [
+                    "film_session"
+                ],
+                "summary": "Получение одного сеанса фильма",
+                "description": "Получение одного сеанса фильма",
+                "operationId": "bd84fc24f0ba2b0f9d5558ccfa6054ef",
+                "requestBody": {
+                    "$ref": "#/components/requestBodies/FilmGetRequest"
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/SessionResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "format": "string",
+                                            "example": "Error"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Message": {
+                                                    "type": "string",
+                                                    "format": "string",
+                                                    "example": "syntax error, unexpected token \"}\""
+                                                },
+                                                "Info": {
+                                                    "$ref": "#/components/schemas/Error"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Error": {
+                "properties": {
+                    "line": {
+                        "type": "integer",
+                        "example": 37
+                    },
+                    "file": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "/path_to_file/..."
+                    }
+                },
+                "type": "object"
+            },
+            "TokenResponse": {
+                "properties": {
+                    "token": {
+                        "schema": "required|string",
+                        "type": "string",
+                        "format": "string",
+                        "example": "eyJhbGciOiJzaGEy3rNTYiLCJ0eXAiOiJKV1QifQ==.eyJ1c2VyIjoxLCJwYXNzIjoiY3R2bXof33e5NzUzMSIsImlhdCI6MTcyMDgwNDc1MywiZXh0YSI6MTcyMDg5MTE1MywiZXh0ciI6MTcyMDk3NzU1M30=.ee67049b1dag4898ea60273659487ef0c4e252c610fcfb0fd92bc02138edbf65a1"
+                    }
+                },
+                "type": "object"
+            },
+            "FilmResource": {
+                "properties": {
+                    "film_id": {
+                        "type": "integer",
+                        "format": "number",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Форсаж"
+                    },
+                    "photo": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "dgdsfg.png"
+                    },
+                    "description": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Описание фильма форсаж"
+                    },
+                    "duration": {
+                        "type": "string",
+                        "format": "time",
+                        "example": "02:12"
+                    },
+                    "age_restrictions": {
+                        "type": "integer",
+                        "format": "number",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "SessionResource": {
+                "properties": {
+                    "session_id": {
+                        "type": "integer",
+                        "format": "number",
+                        "example": "1"
+                    },
+                    "film_id": {
+                        "type": "integer",
+                        "format": "number",
+                        "example": "1"
+                    },
+                    "film_start": {
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2024-09-24 23:15"
+                    },
+                    "cost": {
+                        "type": "integer",
+                        "format": "number",
+                        "example": "350"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "requestBodies": {
+            "AuthRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "login": {
+                                    "schema": "required|string|min:3|max:15|unique:App\\Models\\Users,login",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "Test@gmail.com"
+                                },
+                                "password": {
+                                    "schema": "required|string|min:2|max:255",
+                                    "type": "string",
+                                    "format": "password",
+                                    "example": "Password1234"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "CheckRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "token": {
+                                    "schema": "required|string",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "eyJhbGciOiJzaGEy3rNTYiLCJ0eXAiOiJKV1QifQ==.eyJ1c2VyIjoxLCJwYXNzIjoiY3R2bXof33e5NzUzMSIsImlhdCI6MTcyMDgwNDc1MywiZXh0YSI6MTcyMDg5MTE1MywiZXh0ciI6MTcyMDk3NzU1M30=.ee67049b1dag4898ea60273659487ef0c4e252c610fcfb0fd92bc02138edbf65a1"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "InRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "login": {
+                                    "schema": "required|string|min:3|max:15",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "Test@gmail.com"
+                                },
+                                "password": {
+                                    "schema": "required|string|min:3|max:255",
+                                    "type": "string",
+                                    "format": "password",
+                                    "example": "Password1234"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "FilmChangeRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "schema": "required|int",
+                                    "type": "integer",
+                                    "format": "number",
+                                    "example": "1"
+                                },
+                                "name": {
+                                    "schema": "string|min:3|max:255|unique:App\\Models\\Films,name",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "Форсаж"
+                                },
+                                "photo": {
+                                    "schema": "file|mimes:jpeg,png|max:4096",
+                                    "type": "file",
+                                    "format": "image",
+                                    "example": "sfaf.png"
+                                },
+                                "description": {
+                                    "schema": "string|min:5|max:255",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "Описание фильма форсаж"
+                                },
+                                "duration": {
+                                    "schema": "string",
+                                    "type": "string",
+                                    "format": "time",
+                                    "example": "02:10"
+                                },
+                                "age_restrictions": {
+                                    "schema": "int|string",
+                                    "type": "integer",
+                                    "format": "number",
+                                    "example": "2"
+                                },
+                                "method": {
+                                    "schema": "string",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "patch"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "FilmDeleteRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "schema": "required|int",
+                                    "type": "integer",
+                                    "format": "number",
+                                    "example": "1"
+                                },
+                                "method": {
+                                    "schema": "required|int",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "delete"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "FilmGetRequest": {
+                "required": false,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "order": {
+                                    "schema": "string:ASC,DESC",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "ASC"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "FilmSaveRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "schema": "required|string|min:3|max:255|unique:App\\Models\\Films,name",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "Форсаж"
+                                },
+                                "photo": {
+                                    "schema": "required|file|mimes:jpeg,png|max:4096",
+                                    "type": "file",
+                                    "format": "image",
+                                    "example": "sfaf.png"
+                                },
+                                "description": {
+                                    "schema": "required|string|min:5|max:255",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "Описание фильма форсаж"
+                                },
+                                "duration": {
+                                    "schema": "required|string",
+                                    "type": "string",
+                                    "format": "time",
+                                    "example": "02:10"
+                                },
+                                "age_restrictions": {
+                                    "schema": "required|int|string",
+                                    "type": "integer",
+                                    "format": "number",
+                                    "example": "2"
+                                },
+                                "method": {
+                                    "schema": "required|string",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "post"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "SessionChangeRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "schema": "required|int",
+                                    "type": "integer",
+                                    "format": "number",
+                                    "example": "1"
+                                },
+                                "film_id": {
+                                    "schema": "int",
+                                    "type": "integer",
+                                    "format": "number",
+                                    "example": "1"
+                                },
+                                "film_start": {
+                                    "schema": "date|Правило 30 минут",
+                                    "type": "string",
+                                    "format": "datetime",
+                                    "example": "2024-09-24 23:27"
+                                },
+                                "cost": {
+                                    "schema": "int|min:150|max:600",
+                                    "type": "integer",
+                                    "format": "number",
+                                    "example": "200"
+                                },
+                                "method": {
+                                    "schema": "required|string",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "patch"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "SessionDeleteRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "schema": "required|int",
+                                    "type": "integer",
+                                    "format": "number",
+                                    "example": "1"
+                                },
+                                "method": {
+                                    "schema": "required|string",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "delete"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "SessionSaveRequest": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "film_id": {
+                                    "schema": "required|int",
+                                    "type": "ште",
+                                    "format": "number",
+                                    "example": "1"
+                                },
+                                "film_start": {
+                                    "schema": "required|date|Правило 30 минут",
+                                    "type": "string",
+                                    "format": "datetime",
+                                    "example": "2024-09-24 23:27"
+                                },
+                                "cost": {
+                                    "schema": "required|int|min:150|max:600",
+                                    "type": "integer",
+                                    "format": "number",
+                                    "example": "200"
+                                },
+                                "method": {
+                                    "schema": "required|string",
+                                    "type": "string",
+                                    "format": "string",
+                                    "example": "post"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "auth",
+            "description": "auth"
+        },
+        {
+            "name": "film",
+            "description": "film"
+        },
+        {
+            "name": "film_session",
+            "description": "film_session"
+        }
+    ]
+}
