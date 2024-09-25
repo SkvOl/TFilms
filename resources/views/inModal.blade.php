@@ -17,7 +17,7 @@
                     </div>
 
                     <button type="button" class="btn btn-outline-warning" data-bs-dismiss="modal">Закрыть</button>
-                    <button type="button" id="post" class="btn btn-warning login-button" data-bs-dismiss="modal">Сохранить</button>
+                    <button type="button" id="post" class="btn btn-warning login-button" data-bs-dismiss="modal">Войти</button>
                 </form>
             </div> 
         </div>

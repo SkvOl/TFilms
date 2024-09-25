@@ -100,7 +100,6 @@ abstract class Controller{
 
     private function cacheDelete($key){
         $response = DB::table('cache')->where('key', 'like', $key);
-        // file_put_contents('delete.txt', str_replace('?', '"'.$this->system.'%"', $response->toSql()));
         $response->delete();
     }
 }

@@ -9,7 +9,9 @@
         <li><a href="#" class="nav-c-link px-2">Профиль</a></li>
         @if($isAuthorized)
             <li><a href="#" class="nav-c-link px-2" data-bs-toggle="modal" data-bs-target="#saveFilmModal">Добавить фильм</a></li>
-            <li><a href="http://79.174.84.7:8085/api/documentation" class="nav-c-link px-2">Api документация</a></li>
+            <li><a href="#" class="nav-c-link px-2" data-bs-toggle="modal" data-bs-target="#saveSessionFilmsModal">Добавить сеанс</a></li>
+            <li><a href="http://79.174.84.7:8085/api/documentation" class="nav-c-link px-2" target="_blank">Api документация</a></li>
+            <li><a href="http://79.174.84.7:8085/pulse" class="nav-c-link px-2" target="_blank">Pulse</a></li>
         @endif
     </ul>
 

@@ -8,10 +8,12 @@ use App\Http\Source\Controller;
 use Illuminate\Http\Request;
 use App\Http\Source\Wrapper;
 use App\Models\Users;
-use OpenApi\Attributes as OAT;
+
 use App\Http\Systems\Auth\Request\CheckRequest;
 use App\Http\Systems\Auth\Request\AuthRequest;
 use App\Http\Systems\Auth\Request\InRequest;
+
+use OpenApi\Attributes as OAT;
 
 class AuthController extends Controller{
     use Wrapper;
@@ -24,7 +26,7 @@ class AuthController extends Controller{
 
 
 
-    private $live_token_second = 3600;
+    private $live_token_second = 3600; //Не стал выносить в .env потому что подумал что в тестовом проекте так удобнее
 
     #[OAT\Post(
         path: '/auth/in',
@@ -136,7 +138,7 @@ class AuthController extends Controller{
        
         $array = json_decode($token, true);
         if(time() - $array['iat'] >= $this->live_token_second) return throw new Exceptions('The token is timeout', 401);
-    
+
         return ['status'=>'Successfully'];
     }
 

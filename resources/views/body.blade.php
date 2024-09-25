@@ -21,7 +21,7 @@
                         @foreach ($sessions as $key=>$session)
                             @if ($session['film_id'] == $film['film_id'])
                                 <div class="bg-c-card-session card w-25 text-center mb-3 me-3">
-                                    <a id="{{$session['session_id']}}" value="{{$film['film_id']}}" class="session-c-link change-session-button exist-film-id-on-session" data-bs-toggle="modal" data-bs-target="#changeSessionFilmModal">
+                                    <a id="{{$session['session_id']}}" value="{{$film['film_id']}}" class="session-c-link change-session-button exist-film-id-on-session" @if($isAuthorized) data-bs-toggle="modal" data-bs-target="#changeSessionFilmModal" @endif>
                                         <div><h4>{{$session['cost']}} рублей</h4></div>
                                         <div>{{substr($session['film_start'], 0, -3)}}</div>
                                     </a>
@@ -47,6 +47,7 @@
 @include('addFilmModal')
 @include('changeFilmModal')
 @include('addSessionFilmModal')
+@include('addSessionFilmsModal')
 @include('changeSessionFilmModal')
 
 
@@ -79,12 +80,14 @@
             var cost = parent.find('.cost').val();
 
             if(session_id != 0) param['id'] = session_id;
-            param['film_id'] = film_id;
+
+            if(session_id != 0) param['film_id'] = film_id;
+            else param['film_id'] = $("#select-films :selected").val();
+
             if(param['film_start'] != '') param['film_start'] = film_start;
             if(param['cost'] != '') param['cost'] = cost;
             param['method'] = $(this).attr('id');
 
-            console.log(param);
             ajax('/api/film_session', param);
         });
 
@@ -169,7 +172,7 @@
                         }
                     }
                     else{
-                        new Promise(resolve => setTimeout(resolve, 500));
+                        new Promise(resolve => setTimeout(resolve, 1000));
                         window.location.href = window.location.href;
                     }
                 }
@@ -192,7 +195,7 @@
                         }
                     }
                     else{
-                        new Promise(resolve => setTimeout(resolve, 500));
+                        new Promise(resolve => setTimeout(resolve, 1000));
                         window.location.href = window.location.href;
                     }
                 }

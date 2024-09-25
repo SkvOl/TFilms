@@ -15,8 +15,8 @@ class DistanceSessionsRule implements Rule{
 
     function __construct($film_id, $exception = 0){
         $this->duration = strtotime('1970-01-01'.Films::select('duration')->where('id', request()->input($film_id))->get()[0]->duration);
-        $this->sessions = DistanceSessionsResource::collection(FilmsSessions::with(['Films'])->where('id', '!=', $exception)->get());// Если сравнивать со всеми сеансами
-        // $this->sessions = DistanceSessionsResource::collection(FilmsSessions::with(['Films'])->where('film_id', request()->input($film_id))->where('id', '!=', $exception)->get());// Если сравнивать с сеансами текущего фильма
+        // $this->sessions = DistanceSessionsResource::collection(FilmsSessions::with(['Films'])->where('id', '!=', $exception)->get());// Если сравнивать со всеми сеансами
+        $this->sessions = DistanceSessionsResource::collection(FilmsSessions::with(['Films'])->where('film_id', request()->input($film_id))->where('id', '!=', $exception)->get());// Если сравнивать с сеансами текущего фильма
         $this->sessions = json_decode($this->sessions->toJson(), true);
     }
 
