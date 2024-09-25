@@ -73,8 +73,6 @@ class FilmController extends Controller{
         parameters: [new OAT\RequestBody(ref: "#/components/requestBodies/FilmGetRequest")]
     )]
     function getOne(string $id){
-        file_put_contents('para_getOne.txt', var_export($id, true));
-
         $films = new Films;
         return FilmResource::collection([$films->find($id)]);
     }
@@ -203,7 +201,10 @@ class FilmController extends Controller{
     )]
     function delete($request){
         $id = $request->input('id');
-        Films::find($id)->delete();
+        $films = Films::find($id);
+
+        $films->FilmsSessions()->delete();
+        $films->delete();
         
         return [
             'id'=>$id,
